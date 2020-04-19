@@ -14,7 +14,6 @@ public class ProjectService {
 	private ProjectRepository projectRepository;
 	
 	public Project saveOrUpdateProject(Project project) {
-		
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());;
 			projectRepository.save(project);
@@ -23,5 +22,13 @@ public class ProjectService {
 		}
 		
 		return projectRepository.save(project);
+	}
+	
+	public Project findProjectByIdentifier(String projectIdentifier) {
+		Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
+		if(project == null) {
+			throw new ProjectIdException("Project identifier '" + projectIdentifier + "' does not exist");
+		}
+		return projectRepository.findByProjectIdentifier(projectIdentifier);
 	}
 }
